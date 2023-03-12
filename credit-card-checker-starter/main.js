@@ -25,12 +25,84 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 // Add your functions below:
 
+const validateCred = (tarjetNumbers) => {
+    let chekDigit = 0
+    if (tarjetNumbers.length > 0) {
+        let lastPosition = tarjetNumbers.length - 1;
+        let resutCompNumbers = [];
+        for (let i = lastPosition; i >= 0; i -= 1) {
+            if (i === lastPosition) {
+                chekDigit = tarjetNumbers[i]
+            } else {
+                if (lastPosition % 2 != 0) {
+                    if (i % 2 === 0) {
+                        if (tarjetNumbers[i] * 2 > 9) {
+                            resutCompNumbers.push((tarjetNumbers[i] * 2) - 9)
+                        } else {
+                            resutCompNumbers.push(tarjetNumbers[i] * 2)
+                        }
+                    } else {
+                        resutCompNumbers.push(tarjetNumbers[i])
+                    }
+                } else {
+                    if (i % 2 === 0) {
+                        resutCompNumbers.push(tarjetNumbers[i])
+                    } else {
+                        if (tarjetNumbers[i] * 2 > 9) {
+                            resutCompNumbers.push((tarjetNumbers[i] * 2) - 9)
+                        } else {
+                            resutCompNumbers.push(tarjetNumbers[i] * 2)
+                        }
+                    }
+                }
+
+            }
+        }
+        let sumResult = (resutCompNumbers.reduce((accumulator, currentValue) => accumulator + currentValue)) + chekDigit
+        return (sumResult % 10 === 0)
+    } else {
+        return 'The data from Credicard is cero'
+    }
+}
+
+const findInvalidCards = (crediCard) => {
+    let cardValidation = [];
+    cardValidation = crediCard.filter((card) => !validateCred(card))
+    return cardValidation;
+}
+
+
+idInvalidCardCompanies = (invalidCard) => {
+    let invalidCompanyCards = []
+    invalidCompanyCards = invalidCard.map((card) => {
+        switch (card[0]) {
+            case 3:
+                return "Amex (American Express)"
+                break;
+            case 4:
+                return "Visa"
+                break;
+            case 5:
+                return "Mastercard"
+                break;
+            case 6:
+                return "Discover"
+                break;
+            default:
+                console.log("Company not found")
+                break;
+        }
+    })
+    return invalidCompanyCards
+}
+
+console.log(
+
+
+    idInvalidCardCompanies(findInvalidCards(batch))
 
 
 
-
-
-
-
+)
 
 
